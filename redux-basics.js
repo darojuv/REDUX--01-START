@@ -32,3 +32,14 @@ store.dispatch({
 console.log(store.getState());
 
 //Subscription
+store.subscribe(() => {
+    console.log('[subscription]', store.getState());
+});
+store.dispatch({
+    type:"ADD_COUNTER",
+    value: 10
+});
+store.dispatch({
+    type:"ADD_COUNTER",
+    value: 3
+});

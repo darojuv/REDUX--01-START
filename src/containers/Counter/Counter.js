@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import CounterControl from '../../components/CounterControl/CounterControl';
 import CounterOutput from '../../components/CounterOutput/CounterOutput';
@@ -22,20 +23,36 @@ class Counter extends Component {
             case 'sub':
                 this.setState( ( prevState ) => { return { counter: prevState.counter - value } } )
                 break;
+            default:
+                break;
         }
     }
 
     render () {
         return (
             <div>
-                <CounterOutput value={this.state.counter} />
-                <CounterControl label="Increment" clicked={() => this.counterChangedHandler( 'inc' )} />
-                <CounterControl label="Decrement" clicked={() => this.counterChangedHandler( 'dec' )}  />
-                <CounterControl label="Add 5" clicked={() => this.counterChangedHandler( 'add', 5 )}  />
-                <CounterControl label="Subtract 5" clicked={() => this.counterChangedHandler( 'sub', 5 )}  />
+                {/* <CounterOutput value={this.state.counter} /> */}
+                <CounterOutput value={this.props.ctr  } />
+                <CounterControl label="Increment" clicked={ this.props.onIncrementCounter } />
+                <CounterControl label="Decrement" clicked={this.props.onDecrementCounter}  />
+                <CounterControl label="Add 5" clicked={(number) => this.props.onAddCounter(5)}  />
+                <CounterControl label="Subtract 5" clicked={(number) => this.props.onSubtractCounter(5)}  />
             </div>
         );
     }
 }
 
-export default Counter;
+const mapStoreToProps = (reduxStore) => {
+    return {
+        ctr: reduxStore.counter
+    };
+};
+const mapDispatchToProps = dispatch => {
+    return{
+        onIncrementCounter: () => dispatch({ type: 'INCREMENT' }),
+        onDecrementCounter: () => dispatch({ type: 'DECREMENT' }),
+        onAddCounter: (number) => dispatch({ type: 'ADD', value: number }),
+        onSubtractCounter: (number) => dispatch({ type: 'SUBTRACT', value: number }),                        
+    };
+}
+export default connect(mapStoreToProps, mapDispatchToProps)(Counter);
