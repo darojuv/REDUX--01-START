@@ -12,12 +12,14 @@ class Counter extends Component {
                 <CounterOutput value={this.props.ctr  } />
                 <CounterControl label="Increment" clicked={ this.props.onIncrementCounter } />
                 <CounterControl label="Decrement" clicked={this.props.onDecrementCounter}  />
-                <CounterControl label="Add 5" clicked={() => this.props.onAddResults(5)}  />
+                <CounterControl label="Add 5" clicked={() => this.props.onAddCounter(5)}  />
                 <CounterControl label="Subtract 5" clicked={() => this.props.onSubtractResults(5)}  />
                 <hr/>
-                <button onClick={this.props.onStoreCounter} >Add Result</button>
+                <button onClick={this.props.onStoreResults} >Add Result</button>
             <ul>
-                <li onClick={this.props.onDeleteCounter}></li>
+                {this.props.rstls.map(rslt =>
+                    <li onClick={this.props.onDeleteCounter} key={rslt.id} >{rslt.value}</li>
+                )}
             </ul>
             </div>
         );
@@ -26,7 +28,8 @@ class Counter extends Component {
 
 const mapStoreToProps = (reduxStore) => {
     return {
-        ctr: reduxStore.counter
+        ctr: reduxStore.counter,
+        rstls: reduxStore.results
     };
 };
 const mapDispatchToProps = dispatch => {
