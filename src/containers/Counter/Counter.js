@@ -5,29 +5,6 @@ import CounterControl from '../../components/CounterControl/CounterControl';
 import CounterOutput from '../../components/CounterOutput/CounterOutput';
 
 class Counter extends Component {
-    state = {
-        counter: 0
-    }
-
-    counterChangedHandler = ( action, value ) => {
-        switch ( action ) {
-            case 'inc':
-                this.setState( ( prevState ) => { return { counter: prevState.counter + 1 } } )
-                break;
-            case 'dec':
-                this.setState( ( prevState ) => { return { counter: prevState.counter - 1 } } )
-                break;
-            case 'add':
-                this.setState( ( prevState ) => { return { counter: prevState.counter + value } } )
-                break;
-            case 'sub':
-                this.setState( ( prevState ) => { return { counter: prevState.counter - value } } )
-                break;
-            default:
-                break;
-        }
-    }
-
     render () {
         return (
             <div>
@@ -35,8 +12,13 @@ class Counter extends Component {
                 <CounterOutput value={this.props.ctr  } />
                 <CounterControl label="Increment" clicked={ this.props.onIncrementCounter } />
                 <CounterControl label="Decrement" clicked={this.props.onDecrementCounter}  />
-                <CounterControl label="Add 5" clicked={(number) => this.props.onAddCounter(5)}  />
-                <CounterControl label="Subtract 5" clicked={(number) => this.props.onSubtractCounter(5)}  />
+                <CounterControl label="Add 5" clicked={() => this.props.onAddResults(5)}  />
+                <CounterControl label="Subtract 5" clicked={() => this.props.onSubtractResults(5)}  />
+                <hr/>
+                <button onClick={this.props.onStoreCounter} >Add Result</button>
+            <ul>
+                <li onClick={this.props.onDeleteCounter}></li>
+            </ul>
             </div>
         );
     }
@@ -52,7 +34,9 @@ const mapDispatchToProps = dispatch => {
         onIncrementCounter: () => dispatch({ type: 'INCREMENT' }),
         onDecrementCounter: () => dispatch({ type: 'DECREMENT' }),
         onAddCounter: (number) => dispatch({ type: 'ADD', value: number }),
-        onSubtractCounter: (number) => dispatch({ type: 'SUBTRACT', value: number }),                        
+        onSubtractCounter: (number) => dispatch({ type: 'SUBTRACT', value: number }),      
+        onStoreResults: () => dispatch({type:'STORE_RESULTS'}),
+        onDeleteResults: () => dispatch({type:'REMOVE_RESULTS'})                  
     };
 }
 export default connect(mapStoreToProps, mapDispatchToProps)(Counter);

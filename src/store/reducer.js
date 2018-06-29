@@ -1,4 +1,7 @@
-const initialStore = {counter:0};
+const initialStore = {
+    counter:0,
+    results:[]
+};
 
 const reducer = (state = initialStore, action) =>{
     if(action.type === 'INCREMENT'){
