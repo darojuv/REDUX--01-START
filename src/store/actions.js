@@ -5,4 +5,3 @@ export const ADD = 'ADD';
 export const SUBTRACT = 'SUBTRACT';
 export const STORE_RESULTS = 'STORE_RESULTS';
 export const REMOVE_RESULTS = 'REMOVE_RESULTS';
-
